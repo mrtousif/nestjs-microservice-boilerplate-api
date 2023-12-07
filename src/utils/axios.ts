@@ -24,6 +24,7 @@ export const interceptAxiosResponseError = (error, logger: ILoggerAdapter) => {
   ].find(Boolean);
 
   const curl = AxiosConverter.getCurl(error);
+
   logger.error(
     new BaseException(typeof error['code'] === 'string' ? error['code'] : message, status, {
       curl,

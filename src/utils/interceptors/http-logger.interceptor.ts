@@ -2,12 +2,17 @@ import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nes
 import { Observable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 
+import { ILoggerAdapter } from '@/infra/logger';
+
 @Injectable()
 export class HttpLoggerInterceptor implements NestInterceptor {
+  constructor(private readonly logger: ILoggerAdapter) {}
+
   intercept(executionContext: ExecutionContext, next: CallHandler): Observable<unknown> {
     const context = `${executionContext.getClass().name}/${executionContext.getHandler().name}`;
 
     const request = executionContext.switchToHttp().getRequest();
+    const res = executionContext.switchToHttp().getResponse();
 
     request['context'] = context;
 
@@ -15,6 +20,8 @@ export class HttpLoggerInterceptor implements NestInterceptor {
       request.headers.traceid = uuidv4();
       request.id = request.headers.traceid;
     }
+
+    this.logger.logger(request, res);
 
     return next.handle();
   }

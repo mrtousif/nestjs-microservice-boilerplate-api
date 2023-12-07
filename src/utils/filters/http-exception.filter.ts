@@ -43,7 +43,8 @@ export class AppExceptionFilter implements ExceptionFilter {
 
     if (exception instanceof AxiosError) {
       if ((exception as AxiosError).response?.data) {
-        return (exception as AxiosError).message;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return [(exception as any)?.response?.data?.error?.message, (exception as AxiosError).message].find(Boolean);
       }
     }
 

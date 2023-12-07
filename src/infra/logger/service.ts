@@ -74,7 +74,14 @@ export class LoggerService implements ILoggerAdapter {
 
     const response =
       error instanceof BaseException
-        ? { statusCode: error['statusCode'], message: error?.message, ...error?.parameters }
+        ? {
+            statusCode: error['statusCode'],
+            message: [
+              (error?.parameters as { responseData?: { error?: { message?: string } } })?.responseData.error.message,
+              error?.message
+            ].find(Boolean),
+            ...error?.parameters
+          }
         : errorResponse?.value();
 
     const type = {
@@ -121,8 +128,9 @@ export class LoggerService implements ILoggerAdapter {
       levelFirst: true,
       ignore: 'pid,hostname',
       quietReqLogger: true,
-      messageFormat: (log: unknown, messageKey: string) => {
-        const message = log[String(messageKey)];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      messageFormat: (log: any, messageKey: string) => {
+        const message = [log?.responseData?.error?.message, log[String(messageKey)]].find(Boolean);
         if (this.app) {
           return `[${blue(this.app)}] ${message}`;
         }
@@ -164,8 +172,7 @@ export class LoggerService implements ILoggerAdapter {
         },
         res: pino.stdSerializers.res
       },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      customProps: (req: any): any => {
+      customProps: (req: IncomingMessage & { context: string; protocol: string }): object => {
         const context = req.context;
 
         const traceid = [req?.headers?.traceid, req.id].find(Boolean);
