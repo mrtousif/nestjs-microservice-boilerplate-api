@@ -42,13 +42,13 @@ let AppExceptionFilter = exports.AppExceptionFilter = class AppExceptionFilter {
         });
     }
     getMessage(exception) {
-        var _a;
+        var _a, _b, _c, _d;
         if (exception instanceof zod_1.ZodError) {
             return exception.issues.map((i) => `${i.path}: ${i.message}`).join(',');
         }
         if (exception instanceof axios_1.AxiosError) {
             if ((_a = exception.response) === null || _a === void 0 ? void 0 : _a.data) {
-                return exception.message;
+                return [(_d = (_c = (_b = exception === null || exception === void 0 ? void 0 : exception.response) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.error) === null || _d === void 0 ? void 0 : _d.message, exception.message].find(Boolean);
             }
         }
         return exception.message;
