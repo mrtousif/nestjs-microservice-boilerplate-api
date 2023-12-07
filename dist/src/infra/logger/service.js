@@ -61,9 +61,13 @@ let LoggerService = exports.LoggerService = class LoggerService {
         this.logger.logger.warn([obj, message].find(Boolean), message);
     }
     error(error, message, context) {
+        var _a;
         const errorResponse = this.getErrorResponse(error);
         const response = error instanceof exception_1.BaseException
-            ? Object.assign({ statusCode: error['statusCode'], message: error === null || error === void 0 ? void 0 : error.message }, error === null || error === void 0 ? void 0 : error.parameters) : errorResponse === null || errorResponse === void 0 ? void 0 : errorResponse.value();
+            ? Object.assign({ statusCode: error['statusCode'], message: [
+                    (_a = error === null || error === void 0 ? void 0 : error.parameters) === null || _a === void 0 ? void 0 : _a.responseData.error.message,
+                    error === null || error === void 0 ? void 0 : error.message
+                ].find(Boolean) }, error === null || error === void 0 ? void 0 : error.parameters) : errorResponse === null || errorResponse === void 0 ? void 0 : errorResponse.value();
         const type = {
             Error: exception_1.BaseException.name
         }[error === null || error === void 0 ? void 0 : error.name];
@@ -89,7 +93,8 @@ let LoggerService = exports.LoggerService = class LoggerService {
             ignore: 'pid,hostname',
             quietReqLogger: true,
             messageFormat: (log, messageKey) => {
-                const message = log[String(messageKey)];
+                var _a, _b;
+                const message = [(_b = (_a = log === null || log === void 0 ? void 0 : log.responseData) === null || _a === void 0 ? void 0 : _a.error) === null || _b === void 0 ? void 0 : _b.message, log[String(messageKey)]].find(Boolean);
                 if (this.app) {
                     return `[${(0, colorette_1.blue)(this.app)}] ${message}`;
                 }
