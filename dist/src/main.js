@@ -40,7 +40,7 @@ async function bootstrap() {
         ]
     });
     app.use((0, helmet_1.default)());
-    const { ENV, MONGO_URL, POSTGRES_URL, PORT, HOST, ZIPKIN_URL, PROMETHUES_URL, RATE_LIMIT_BY_USER } = app.get(secrets_1.ISecretsAdapter);
+    const { ENV, MONGO_URL, POSTGRES_URL, PGADMIN_URL, MONGO_EXPRESS_URL, PORT, HOST, ZIPKIN_URL, PROMETHUES_URL, RATE_LIMIT_BY_USER } = app.get(secrets_1.ISecretsAdapter);
     const limiter = (0, express_rate_limit_1.rateLimit)({
         windowMs: 15 * 60 * 1000,
         limit: RATE_LIMIT_BY_USER,
@@ -67,11 +67,14 @@ async function bootstrap() {
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('docs', app, document);
-    loggerService.log(`🟢 ${package_json_1.name} listening at ${(0, colorette_1.bold)(PORT)} on ${(0, colorette_1.bold)(ENV === null || ENV === void 0 ? void 0 : ENV.toUpperCase())} 🟢\n`);
-    loggerService.log(`🟢 Swagger listening at ${(0, colorette_1.bold)(`${HOST}/docs`)} 🟢\n`);
-    await app.listen(PORT);
+    await app.listen(PORT, () => {
+        loggerService.log(`🟢 ${package_json_1.name} listening at ${(0, colorette_1.bold)(PORT)} on ${(0, colorette_1.bold)(ENV === null || ENV === void 0 ? void 0 : ENV.toUpperCase())} 🟢\n`);
+        loggerService.log(`🟢 Swagger listening at ${(0, colorette_1.bold)(`${HOST}/docs`)} 🟢\n`);
+    });
     loggerService.log(`🔵 Postgres listening at ${(0, colorette_1.bold)(POSTGRES_URL)}`);
-    loggerService.log(`🔵 Mongo listening at ${(0, colorette_1.bold)(MONGO_URL)}\n`);
+    loggerService.log(`✴️ PgAdmin listening at ${(0, colorette_1.bold)(PGADMIN_URL)}\n`);
+    loggerService.log(`🔵 Mongo listening at ${(0, colorette_1.bold)(MONGO_URL)}`);
+    loggerService.log(`✴️ Mongo express listening at ${(0, colorette_1.bold)(MONGO_EXPRESS_URL)}\n`);
     loggerService.log(`⚪ Zipkin[${(0, colorette_1.bold)('Tracing')}] listening at ${(0, colorette_1.bold)(ZIPKIN_URL)}`);
     loggerService.log(`⚪ Promethues[${(0, colorette_1.bold)('Metrics')}] listening at ${(0, colorette_1.bold)(PROMETHUES_URL)}`);
     const userRepository = app.get(user_1.IUserRepository);

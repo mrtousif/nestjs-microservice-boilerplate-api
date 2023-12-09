@@ -51,8 +51,18 @@ async function bootstrap() {
 
   app.use(helmet());
 
-  const { ENV, MONGO_URL, POSTGRES_URL, PORT, HOST, ZIPKIN_URL, PROMETHUES_URL, RATE_LIMIT_BY_USER } =
-    app.get(ISecretsAdapter);
+  const {
+    ENV,
+    MONGO_URL,
+    POSTGRES_URL,
+    PGADMIN_URL,
+    MONGO_EXPRESS_URL,
+    PORT,
+    HOST,
+    ZIPKIN_URL,
+    PROMETHUES_URL,
+    RATE_LIMIT_BY_USER
+  } = app.get(ISecretsAdapter);
 
   const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -86,13 +96,15 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  loggerService.log(`🟢 ${name} listening at ${bold(PORT)} on ${bold(ENV?.toUpperCase())} 🟢\n`);
-  loggerService.log(`🟢 Swagger listening at ${bold(`${HOST}/docs`)} 🟢\n`);
-
-  await app.listen(PORT);
+  await app.listen(PORT, () => {
+    loggerService.log(`🟢 ${name} listening at ${bold(PORT)} on ${bold(ENV?.toUpperCase())} 🟢\n`);
+    loggerService.log(`🟢 Swagger listening at ${bold(`${HOST}/docs`)} 🟢\n`);
+  });
 
   loggerService.log(`🔵 Postgres listening at ${bold(POSTGRES_URL)}`);
-  loggerService.log(`🔵 Mongo listening at ${bold(MONGO_URL)}\n`);
+  loggerService.log(`✴️ PgAdmin listening at ${bold(PGADMIN_URL)}\n`);
+  loggerService.log(`🔵 Mongo listening at ${bold(MONGO_URL)}`);
+  loggerService.log(`✴️ Mongo express listening at ${bold(MONGO_EXPRESS_URL)}\n`);
   loggerService.log(`⚪ Zipkin[${bold('Tracing')}] listening at ${bold(ZIPKIN_URL)}`);
   loggerService.log(`⚪ Promethues[${bold('Metrics')}] listening at ${bold(PROMETHUES_URL)}`);
 

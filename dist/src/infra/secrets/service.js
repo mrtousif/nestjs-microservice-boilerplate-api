@@ -22,6 +22,8 @@ let SecretsService = exports.SecretsService = class SecretsService {
         this.REDIS_URL = this.config.get('REDIS_URL');
         this.POSTGRES_URL = `postgresql://${this.config.get('POSTGRES_USER')}:${this.config.get('POSTGRES_PASSWORD')}@${this.config.get('POSTGRES_HOST')}:${this.config.get('POSTGRES_PORT')}/${this.config.get('POSTGRES_DATABASE')}`;
         this.MONGO_URL = this.config.get('MONGO_URL');
+        this.MONGO_EXPRESS_URL = this.config.get('MONGO_EXPRESS_URL');
+        this.PGADMIN_URL = this.config.get('PGADMIN_URL');
         this.ZIPKIN_URL = this.config.get('ZIPKIN_URL');
         this.PROMETHUES_URL = this.config.get('PROMETHUES_URL');
         this.TOKEN_EXPIRATION = this.config.get('TOKEN_EXPIRATION');

@@ -15,6 +15,10 @@ export abstract class ISecretsAdapter {
 
   ZIPKIN_URL: string;
 
+  MONGO_EXPRESS_URL: string;
+
+  PGADMIN_URL: string;
+
   PROMETHUES_URL: string;
 
   TOKEN_EXPIRATION: number;
