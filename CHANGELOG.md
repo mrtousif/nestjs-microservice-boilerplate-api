@@ -1,3 +1,19 @@
+# [1.14.0](https://github.com/mikemajesty/nestjs-microservice-boilerplate-api/compare/1.13.0...1.14.0) (2023-12-13)
+
+
+### Bug Fixes
+
+* **remove:** remove dist ([7c43524](https://github.com/mikemajesty/nestjs-microservice-boilerplate-api/commit/7c435242aaf655054e1e47766fe1dcac3f3a5e41))
+* **remove:** remove dist ([51d8b85](https://github.com/mikemajesty/nestjs-microservice-boilerplate-api/commit/51d8b8564cbedb8b23d2cccd5738ea49a5fff56c))
+
+
+### Features
+
+* **database:** add pgadmin and mongo-exrepss ([3765c2f](https://github.com/mikemajesty/nestjs-microservice-boilerplate-api/commit/3765c2f1152f0e5cc74a9d4229f5837ad12b330a))
+* **database:** add snakeCase database support ([567c4ae](https://github.com/mikemajesty/nestjs-microservice-boilerplate-api/commit/567c4ae4b56a003b35b73359ffba8aec67269683))
+* **dependencies:** upgrade cli version ([c5cb35e](https://github.com/mikemajesty/nestjs-microservice-boilerplate-api/commit/c5cb35e87a1f00b59e7c86d177d5057a605601a8))
+* **repository:** add find and update to negeric repository ([59a46bf](https://github.com/mikemajesty/nestjs-microservice-boilerplate-api/commit/59a46bf3e59c08ad6c6ed32b3e7707aba4123005))
+
 # [1.14.0](https://github.com/mikemajesty/nestjs-microservice-boilerplate-api/compare/1.13.0...1.14.0) (2023-12-09)
 
 

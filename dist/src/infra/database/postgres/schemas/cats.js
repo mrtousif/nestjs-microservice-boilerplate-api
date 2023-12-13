@@ -34,6 +34,6 @@ __decorate([
     __metadata("design:type", Date)
 ], CatsSchema.prototype, "deletedAt", void 0);
 exports.CatsSchema = CatsSchema = __decorate([
-    (0, sequelize_typescript_1.Table)({ timestamps: true, tableName: 'cats' })
+    (0, sequelize_typescript_1.Table)({ timestamps: true, tableName: 'cats', underscored: true })
 ], CatsSchema);
 //# sourceMappingURL=cats.js.map
